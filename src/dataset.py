@@ -36,24 +36,26 @@ def get_datasets(x_train, y_train, x_val, y_val, batch_size=8):
     '''
     # Train Dataset
     train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
-    train_dataset = train_dataset.apply(
-        tf.data.experimental.map_and_batch(
-            map_func = load_data, batch_size = batch_size,
-            num_parallel_calls = tf.data.experimental.AUTOTUNE,
-            drop_remainder = True
-        )
+    train_dataset = train_dataset.map(
+        map_func = load_data,
+        num_parallel_calls = tf.data.experimental.AUTOTUNE
+    )
+    train_dataset = train_dataset.batch(
+        batch_size = batch_size,
+        drop_remainder = True
     )
     train_dataset = train_dataset.repeat()
     train_dataset = train_dataset.prefetch(tf.data.experimental.AUTOTUNE)
     
     # Validation Dataset
     val_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
-    val_dataset = val_dataset.apply(
-        tf.data.experimental.map_and_batch(
-            map_func = load_data, batch_size = batch_size,
-            num_parallel_calls = tf.data.experimental.AUTOTUNE,
-            drop_remainder = True
-        )
+    val_dataset = val_dataset.map(
+        map_func = load_data,
+        num_parallel_calls = tf.data.experimental.AUTOTUNE
+    )
+    val_dataset = val_dataset.batch(
+        batch_size = 8,
+        drop_remainder = True
     )
     val_dataset = val_dataset.repeat()
     val_dataset = val_dataset.prefetch(tf.data.experimental.AUTOTUNE)
