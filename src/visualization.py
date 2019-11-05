@@ -9,10 +9,10 @@ from sklearn.model_selection import train_test_split
 
 
 class DataGenerator(Sequence):
-    
-    'Generates data for Keras'
+    '''Generates data for Keras'''
+
     def __init__(self, image_files, mask_files, batch_size = 16, size = 256, shuffle = True):
-        'Initialization'
+        '''Initialization'''
         self.image_files = image_files
         self.mask_files = mask_files
         self.batch_size = batch_size
@@ -21,11 +21,11 @@ class DataGenerator(Sequence):
         self.on_epoch_end()
 
     def __len__(self):
-        'Denotes the number of batches per epoch'
+        '''Denotes the number of batches per epoch'''
         return int(np.floor(len(self.image_files) / self.batch_size))
 
     def __getitem__(self, index):
-        'Generate one batch of data'
+        '''Generate one batch of data'''
         # Generate indexes of the batch
         indexes = self.indexes[index * self.batch_size:(index + 1) * self.batch_size]
 
@@ -39,13 +39,13 @@ class DataGenerator(Sequence):
         return x, y
 
     def on_epoch_end(self):
-        'Updates indexes after each epoch'
+        '''Updates indexes after each epoch'''
         self.indexes = np.arange(len(self.image_files))
         if self.shuffle == True:
             np.random.shuffle(self.indexes)
 
     def __data_generation(self, image_files_batch, mask_files_batch):
-        'Generates data containing batch_size samples'
+        '''Generates data containing batch_size samples'''
         # Initialization
         x, y = [], []
 
@@ -64,12 +64,21 @@ class DataGenerator(Sequence):
 
 
 def visualize(train_image_location, train_mask_location, batch_size = 8, image_size = 512):
+    '''Dataset Visualization Function
+    Params:
+        train_image_location    -> Train Image Location
+        train_mask_location     -> Train Mask Location
+        batch_size              -> Batch Size
+        image_size              -> Image Size
+    '''
     datagen = DataGenerator(
         sorted(glob(train_image_location + '/*')),
         sorted(glob(train_mask_location + '/*')),
         batch_size, image_size
     )
+
     x_batch, y_batch = datagen.__getitem__(0)
+    
     fig, axes = plt.subplots(nrows = 4, ncols = 2, figsize = (16, 16))
     plt.setp(axes.flat, xticks = [], yticks = [])
     c = 1

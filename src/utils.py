@@ -3,6 +3,8 @@ from tensorflow.python.client import device_lib
 
 
 def setup_environment():
+    '''Setup Tensorflow Environment'''
+
     print('Tensorflow Version:', tf.__version__)
 
     local_device_protos = device_lib.list_local_devices()
@@ -12,5 +14,6 @@ def setup_environment():
 
 
 def show_available_devices():
+    '''Display List of Available Devices'''
     local_device_protos = device_lib.list_local_devices()
     print(local_device_protos)
