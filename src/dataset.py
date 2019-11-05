@@ -1,5 +1,6 @@
 from config import *
 import tensorflow as tf
+from matplotlib import pyplot as plt
 
 
 def load_data(image_path, mask_path):
@@ -58,3 +59,25 @@ def get_datasets(x_train, y_train, x_val, y_val, batch_size=8):
     val_dataset = val_dataset.prefetch(tf.data.experimental.AUTOTUNE)
     
     return train_dataset, val_dataset
+
+
+def visualize(dataset):
+    '''Dataset Visualization Function
+    Params:
+        dataset    -> Dataset
+    '''
+    for x, y in train_dataset.take(1):
+        x_batch = x.numpy()
+        y_batch = y.numpy()
+        fig, axes = plt.subplots(nrows = 4, ncols = 2, figsize = (16, 16))
+        plt.setp(axes.flat, xticks = [], yticks = [])
+        c = 1
+        for i, ax in enumerate(axes.flat):
+            if i % 2 == 0:
+                ax.imshow(x_batch[c] * 127.5 + 127.5)
+                ax.set_xlabel('Image_' + str(c))
+            else:
+                ax.imshow(y_batch[c])
+                ax.set_xlabel('Mask_' + str(c))
+                c += 1
+        plt.show()
