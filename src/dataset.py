@@ -68,7 +68,7 @@ def visualize(dataset):
     Params:
         dataset    -> Dataset
     '''
-    for x, y in train_dataset.take(1):
+    for x, y in dataset.take(1):
         x_batch = x.numpy()
         y_batch = y.numpy()
         fig, axes = plt.subplots(nrows = 4, ncols = 2, figsize = (16, 16))
