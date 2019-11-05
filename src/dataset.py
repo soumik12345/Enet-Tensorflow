@@ -36,6 +36,7 @@ def get_datasets(x_train, y_train, x_val, y_val, batch_size=8):
     '''
     # Train Dataset
     train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+    train_dataset = train_dataset.shuffle(buffer_size=128)
     train_dataset = train_dataset.map(
         map_func = load_data,
         num_parallel_calls = tf.data.experimental.AUTOTUNE
@@ -49,6 +50,7 @@ def get_datasets(x_train, y_train, x_val, y_val, batch_size=8):
     
     # Validation Dataset
     val_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
+    val_dataset = val_dataset.shuffle(buffer_size=128)
     val_dataset = val_dataset.map(
         map_func = load_data,
         num_parallel_calls = tf.data.experimental.AUTOTUNE
