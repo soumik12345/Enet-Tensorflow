@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore')
 from src.model import Enet
+from src.utils import *
 
-enet = Enet()
-enet.summary()
+setup_environment()
+show_available_devices()
