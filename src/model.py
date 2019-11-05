@@ -18,7 +18,10 @@ def Enet(input_shape = (512, 512, 3), output_channels = 3):
     x = section_4(x)
     x = section_5(x)
     
-    output_tennsor = Conv2DTranspose(filters=output_channels, kernel_size=(2, 2), strides=(2, 2), padding='same')(x)
+    output_tennsor = Conv2DTranspose(
+        filters=output_channels, kernel_size=(2, 2),
+        strides=(2, 2), padding='same', activation='softmax'
+    )(x)
     
     model = Model(input_tensor, output_tennsor)
     return model
