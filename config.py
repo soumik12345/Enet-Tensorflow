@@ -1,6 +1,7 @@
 TRAIN_IMAGE_LOCATION = '../dataset/images/render'
 TRAIN_MASK_LOCATION = '../dataset/images/ground'
 IMAGE_SIZE = 512
+NUM_CLASSES = 4
 BATCH_SIZE = 8
 EPOCHS = 100
 LOSS_HYPERPARAMETERS = {

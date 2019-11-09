@@ -21,6 +21,7 @@ def load_data(image_path, mask_path):
     mask = tf.image.decode_png(mask, channels = 3)
     mask = tf.cast(mask, dtype = tf.uint8)
     mask = tf.image.resize(images = mask, size = [IMAGE_SIZE, IMAGE_SIZE])
+    mask = tf.one_hot(tf.squeeze(mask), depth=NUM_CLASSES)
     return image, mask
 
 
