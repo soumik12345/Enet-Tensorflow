@@ -18,9 +18,9 @@ def load_data(image_path, mask_path):
     image = (image - 127.5) / 127.5
     # Reading Mask
     mask = tf.io.read_file(mask_path)
-    mask = tf.image.decode_png(mask, channels = 3)
-    mask = tf.cast(mask, dtype = tf.uint8)
+    mask = tf.image.decode_png(mask, channels = 1)
     mask = tf.image.resize(images = mask, size = [IMAGE_SIZE, IMAGE_SIZE])
+    mask = tf.cast(mask, dtype = tf.uint8)
     mask = tf.one_hot(tf.squeeze(mask), depth=NUM_CLASSES)
     return image, mask
 
